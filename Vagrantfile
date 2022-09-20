@@ -63,4 +63,25 @@ end
    server.vm.provision "shell", inline: $script_inject_pk
  end
 
+# Master node 
+  configuration.vm.define "master" do |app|
+   app.vm.hostname = "master"
+   app.vm.box = "ubuntu/focal64"
+   app.vm.network :private_network, ip: "192.168.60.200"
+   app.vm.provider "virtualbox" do |vb|
+     vb.memory = "4096"
+     vb.cpus = "2"
+   end
+   app.vm.provision "shell", inline: $script_inject_pk
+ end
+
+# worker node
+  configuration.vm.define "worker" do |app|
+   app.vm.hostname = "worker"
+   app.vm.box = "ubuntu/focal64"
+   app.vm.network :private_network, ip: "192.168.60.201"
+   app.vm.provision "shell", inline: $script_inject_pk
+ end
+
+
 end   
